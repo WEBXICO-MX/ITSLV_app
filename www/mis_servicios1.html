@@ -71,7 +71,7 @@
         <script src="cordova.js"></script>
         <script src="PushNotification.js"></script>
         <script>
-        var ws_rest1 = "http://www.uttab.edu.mx/rest/json/mis_servicios/get";
+        var ws_rest1 = "http://www.uttab.edu.mx/ITSLV_api/rest/servicios";
         //var senderID_android = "374887891731"; //--> AppITSLVNotificationsPush	
         var senderID_android = "169163360125"; //--> NotificacionesPushExample
         //var On3rdPartyServer = "http://www.ITSLV.edu.mx/AppITSLVNotificationsPush";
@@ -91,7 +91,7 @@
                     $.each(data, function (i, item) {
                         html += '<div class="col-xs-6 col-sm-4 col-md-3">';
                         html += '<a href="' + data[i].link + '">';
-                        html += '<img src="http://www.ITSLV.edu.mx/' + data[i].img + '" alt="' + data[i].nombre + '" class="img-responsive">';
+                        html += '<img src="' + data[i].img + '" alt="' + data[i].nombre + '" class="img-responsive">';
                         html += '</a><br/>';
                         html += '</div>';
 

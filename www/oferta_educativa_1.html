@@ -77,7 +77,7 @@
                                     var count = 1;
                                     $.each(data, function (i, item) {
                                         html += '<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">';
-                                        html += '<a href="oferta_educativa2_1.html?cve_carrera=' + data[i].id + '"><img src="http://www.uttab.edu.mx/ITSLV_api/resources/' + data[i].icono + '" alt="' + data[i].nombre + '" class="img-responsive"/></a>';
+                                        html += '<a href="oferta_educativa2_1.html?cve_carrera=' + data[i].id + '"><img src="' + data[i].icono + '" alt="' + data[i].nombre + '" class="img-responsive"/></a>';
                                         html += '</div>';
                                         if (count % 2 === 0) {
                                             html += '<div class="clearfix visible-xs"></div>';

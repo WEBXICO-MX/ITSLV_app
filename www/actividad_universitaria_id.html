@@ -74,7 +74,7 @@
                                     $('#university_activity').html("");
                                     var html = '';
                                     html += '<div class="col-sm-12">';
-                                    html += '<div class="col-sm-12"><p><img src="http://www.uttab.edu.mx/ITSLV_api/resources/' + (data.img) + ' " class="img-responsive"/></p>' + '</div>';
+                                    html += '<div class="col-sm-12"><p><img src="' + (data.img) + ' " class="img-responsive"/></p>' + '</div>';
                                     html += '<div class="col-sm-12"><h2>' + data.nombre + '</h2>' + '</div>';
                                     html += '<div class="col-sm-12"><button type="button" class="btn btn-success" onclick="window.plugins.socialsharing.share(\'' + data.nombre + '\', \'Instituto Tecnológico  Superior de Villa la Venta (ITSLV) - ' + data.nombre + '\', \'http://www.uttab.edu.mx/ITSLV_api/resources/' + (data.img) + '\',' + (data.link == "" ? "http://www.itslv.edu.mx/" : data.link) + ')"><span class="glyphicon glyphicon-link"></span> Compartir</button><br/><br/></div>';
                                     html += '<div class="col-sm-12">' + data.texto_completo + '</div>';

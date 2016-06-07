@@ -20,7 +20,7 @@
         </style>
     </head>
     <body onload="onLoad()">
-        <div class="container" id="directorio">
+        <div class="container">
             <div class="row">
                 <div class="col-sm-12">
                     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12"><!--<img src="img/ajax-loading.gif" alt="Ajax loading"/>&nbsp;Cargando directorio ... --></div>
+                <div class="col-sm-12" id="directorio"><!--<img src="img/ajax-loading.gif" alt="Ajax loading"/>&nbsp;Cargando directorio ... --></div>
             </div>
         </div>
         <script src="js/jQuery/jquery-1.12.3.min.js"></script>
@@ -94,7 +94,7 @@
                                 mtz_areas.push(data[i].nombre);
                                 mtz_areas_id.push(data[i].id);
                             });
-
+                            
                             getDirectorio(mtz_areas.length);
 
                         },
@@ -112,8 +112,7 @@
 
                 //Función recursiva que se llama asi misma para ejecutar el jsonp
                 function getDirectorio(param)
-                {
-
+                {    
                     if (param === 0) {
                         $('#directorio').html("");
                         $('#directorio').append(html);
@@ -122,7 +121,7 @@
                     }
                     else {
                         $.jsonp({
-                            url: ws_rest1 + '/' + mtz_areas_id[mtz_areas.length - param],
+                            url: ws_rest1 + '/areas/' + mtz_areas_id[mtz_areas.length - param],
                             callbackParameter: 'callback',
                             success: function (data, status) {
                                 var count = 1;
@@ -142,7 +141,9 @@
                                      html += '<p><a href="mailto:' + data[i].email + '">' + data[i].email + '</a></p>';
                                      */
                                     mtz = data[i].tel.split(' ');
-                                    html += '<img src="http://www.ITSLV.edu.mx/' + data[i].img + '" alt="' + data[i].nombre + '" />';
+                                    /*if(data[i].img != "")
+                                    { html += '<img src="' + data[i].img + '" alt="' + data[i].nombre + '" class="img-responsive"/>'; }
+                                    */
                                     html += '<p>' + data[i].nombre + '<br/>' + data[i].puesto + "<br/> <a href=\"javascript:void(0);\" onclick=\"window.open('tel:01993" + mtz[0] + "', '_system');\" >" + data[i].tel + "</a><br/> <a href=\"javascript:void(0);\" onclick=\"window.open('mailto:" + data[i].email + "', '_system');\">" + data[i].email + '</a> </p>';
 
                                     html += '</div>';
@@ -161,7 +162,15 @@
                                 });
                                 html += '</div>';
                                 getDirectorio(param - 1);
-                            }
+                            },
+                                error: function () {
+                                    navigator.notification.alert(
+                                            'La conexión con el servidor no se ha establecido ...', // message
+                                            null, // callback
+                                            '                ITSLV', // title
+                                            'Aceptar' // buttonName
+                                            );
+                                }
                         });
                     }
                 }

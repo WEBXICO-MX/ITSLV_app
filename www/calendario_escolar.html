@@ -64,15 +64,16 @@
             var pushNotification;
             var d = new Date();
             var month = new Array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
-            var imgs = new Array();
-            var imgs_iconografia = new Array();
+            var uri =  "http://www.uttab.edu.mx/ITSLV_api/resources/img/calendario";
+            var imgs = new Array("agosto_2015.jpg","septiembre_2015.jpg","octubre_2015.jpg","noviembre_2015.jpg","diciembre_2015.jpg","enero_2016.jpg","febrero_2016.jpg","marzo_2016.jpg","abril_2016.jpg","mayo_2016.jpg","junio_2016.jpg","julio_2016.jpg");
+            var imgs_iconografia = new Array("simbologia.jpg");
             var mes_default = month[d.getMonth()];
             var anio_default = d.getFullYear();
-            var img = mes_default + '_' + anio_default + '.png';
+            var img = mes_default + '_' + anio_default + '.jpg';
             var alt = mes_default + '_' + anio_default;
             var html = '';
             var html2 = '';
-            var posicion = 0;
+            var posicion = getPosicion(imgs,img);
 
             function getPosicion(mtz, mes)
             {   var pos = 0;
@@ -93,7 +94,7 @@
                 {
                     posicion--;
                     src = imgs[posicion];
-                    $("#calendario").attr("src", "http://www.ITSLV.edu.mx/img/movil/android/calendario_escolar/" + src);
+                    $("#calendario").attr("src", uri+"/" + src);
                 }
             }
 
@@ -104,7 +105,7 @@
                 {
                     posicion++;
                     src2 = imgs[posicion];
-                    $("#calendario").attr("src", "http://www.ITSLV.edu.mx/img/movil/android/calendario_escolar/" + src2);
+                    $("#calendario").attr("src", uri+"/" + src2);
                 }
 
             }
@@ -158,14 +159,14 @@
                 html += '</button>';
                 html += '<br/>';
                 html += ' <br/>';
-                html += '<img src="http://www.ITSLV.edu.mx/img/movil/android/calendario_escolar/' + img + '" alt="' + alt + '" class="img-responsive" id="calendario" style="margin:0 auto;"/>';
+                html += '<img src="'+uri+'/' + img + '" alt="' + alt + '" class="img-responsive" id="calendario" style="margin:0 auto;"/>';
                 html += '<br/>';
                 html += '<br/>';
                 html += '</form>';
                 $("#calendario_escolar").html("");
                 $("#calendario_escolar").append(html);
                 $.each(imgs_iconografia,function(i,item){
-                    html2 += '<img src="http://www.ITSLV.edu.mx/img/movil/android/calendario_escolar/'+item+'" alt="Iconografia" class="img-responsive" style="margin:0 auto;"/>';
+                    html2 += '<img src="'+uri+'/'+item+'" alt="Iconografia" class="img-responsive" style="margin:0 auto;"/>';
                 });
                 /*html2 += '<img src="http://www.ITSLV.edu.mx/img/movil/android/calendario_escolar/iconografia.jpg" alt="Iconografia" class="img-responsive"/>';
                 html2 += '<img src="http://www.ITSLV.edu.mx/img/movil/android/calendario_escolar/iconografia2.jpg" alt="Iconografia" class="img-responsive"/>';
@@ -325,7 +326,7 @@
 
             function onOnline() {
                 ActivityIndicator.show("Cargando");
-                getContentView1();
+                getContentView2();
             }
 
             function onOffline() {
