@@ -55,8 +55,8 @@
         <script src="cordova.js"></script>
         <script src="PushNotification.js"></script>
         <script>
-            var ws_rest1 = "http://www.uttab.edu.mx/ITSLV_api/rest/calendarioescolar";
-            var ws_rest2 = "http://www.uttab.edu.mx/ITSLV_api/rest/calendarioescolariconografia";
+            var ws_rest1 = "http://www.uttab.edu.mx/rest/json/calendario_escolar/get";
+            var ws_rest2 = "http://www.uttab.edu.mx/getCalendarioEscolarIconografia.action";
             //var senderID_android = "374887891731"; //--> AppITSLVNotificationsPush	
             var senderID_android = "169163360125"; //--> NotificacionesPushExample
             //var On3rdPartyServer = "http://www.ITSLV.edu.mx/AppITSLVNotificationsPush";
@@ -64,16 +64,16 @@
             var pushNotification;
             var d = new Date();
             var month = new Array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
-            var uri =  "http://www.uttab.edu.mx/ITSLV_api/resources/img/calendario_escolar";
-            var imgs = new Array();
-            var imgs_iconografia = new Array("2016-2017/iconografia1.png");
+            var uri =  "http://www.uttab.edu.mx/ITSLV_api/resources/img/calendario";
+            var imgs = new Array("agosto_2015.jpg","septiembre_2015.jpg","octubre_2015.jpg","noviembre_2015.jpg","diciembre_2015.jpg","enero_2016.jpg","febrero_2016.jpg","marzo_2016.jpg","abril_2016.jpg","mayo_2016.jpg","junio_2016.jpg","julio_2016.jpg");
+            var imgs_iconografia = new Array("simbologia.jpg");
             var mes_default = month[d.getMonth()];
             var anio_default = d.getFullYear();
-            var img = mes_default + '_' + anio_default + '.png';
+            var img = mes_default + '_' + anio_default + '.jpg';
             var alt = mes_default + '_' + anio_default;
             var html = '';
             var html2 = '';
-            var posicion = 0;
+            var posicion = getPosicion(imgs,img);
 
             function getPosicion(mtz, mes)
             {   var pos = 0;
@@ -111,9 +111,8 @@
             }
             
             function getCalendarioEscolarIconografia(result)
-            {
-                $.each(result, function (i, item) {
-                            imgs_iconografia.push(item.img);
+            {   $.each(result, function (i, item) {
+                            imgs_iconografia.push(item.ruta);
                         });
                 posicion = getPosicion(imgs, img);
                 getContentView2();
@@ -125,15 +124,10 @@
                     callbackParameter: 'callback',
                     success: function (data, status) {
                         $.each(data, function (i, item) {
-                            imgs.push(item.img);
+                            imgs.push(item.mes);
                         });
                         //Llama automaticamente a getCalendarioEscolarIconografia(result) despues de recibir los resultados.                        
-                        //$.getJSON(ws_rest2+"?callback=getCalendarioEscolarIconografia");
-                        $.getJSON(ws_rest2 + '?callback=?', function (data) {
-                            getCalendarioEscolarIconografia(data);
-                         });
-                        //posicion = getPosicion(imgs, img);
-                        //getContentView2();
+                        $.getJSON("http://www.ITSLV.edu.mx/getCalendarioEscolarIconografia.action?callback=?");
                                                 
                     },
                     error: function () {
@@ -151,16 +145,16 @@
             function getContentView2()
             {
                 html += '<form>';
-                html += '<button type="button" class="btn btn-success btn-lg hidden-xs" style="float:left;" onclick="atras();">';
+                html += '<button type="button" class="btn btn-info btn-lg hidden-xs" style="float:left;" onclick="atras();">';
                 html += '<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                 html += '</button>';
-                html += '<button type="button" class="btn btn-success btn-lg hidden-xs" style="float:right;" onclick="adelante();">';
+                html += '<button type="button" class="btn btn-info btn-lg hidden-xs" style="float:right;" onclick="adelante();">';
                 html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>';
                 html += '</button>';
-                html += '<button type="button" class="btn btn-success btn-xs visible-xs" style="float:left;" onclick="atras();">';
+                html += '<button type="button" class="btn btn-info btn-xs visible-xs" style="float:left;" onclick="atras();">';
                 html += '<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                 html += '</button>';
-                html += '<button type="button" class="btn btn-success btn-xs visible-xs" style="float:right;" onclick="adelante();">';
+                html += '<button type="button" class="btn btn-info btn-xs visible-xs" style="float:right;" onclick="adelante();">';
                 html += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>';
                 html += '</button>';
                 html += '<br/>';
@@ -332,7 +326,7 @@
 
             function onOnline() {
                 ActivityIndicator.show("Cargando");
-                getContentView1();
+                getContentView2();
             }
 
             function onOffline() {
